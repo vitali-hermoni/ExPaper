@@ -1,0 +1,56 @@
+﻿@using ExPaper.SharedModels.Lib.DTO;
+@model List<UserDto>
+
+<div class="card shadow border-0 mt-4">
+	<div class="card-header bg-secondary bg-gradient ml-0 py-3">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h1 class="text-white">Benutzer</h1>
+			</div>
+		</div>
+	</div>
+	<div class="card-body p-4">
+		<div class="row pb-3">
+			<div class="col-6">
+			</div>
+			<div class="col-6 text-end">
+				<a asp-controller="Auth" asp-action="Register" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Neu</a>
+			</div>
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>
+						Name
+					</th>
+					<th>
+						Email
+					</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td>
+							@item.Name
+						</td>
+						<td>
+							@item.Email
+						</td>
+						<td>
+							@* <a asp-action="AddUpdateView" asp-route-id="@item.Id" class="btn btn-success">
+								<i class="bi bi-pencil-square"></i>
+							</a>
+
+							<a asp-action="DeleteById" asp-route-id="@item.Id" class="btn btn-danger">
+								<i class="bi bi-trash"></i>
+							</a> *@
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>

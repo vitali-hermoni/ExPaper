@@ -1,0 +1,224 @@
+﻿@using ExPaper.Web.ViewModels;
+@model FolderOrgListViewModel;
+
+
+<form asp-action="AddUpdate" enctype="multipart/form-data">
+    <br />
+    <div class="container border p-3">
+        <h1 class="text-white text-left">Ordner</h1>
+
+        <hr />
+        <div class="row">
+            <input asp-for="@Model.FolderDto.Id" type="hidden" />
+
+
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;"> Name</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="FolderDto.Name" class="form-control" required value="@Model.FolderDto.Name" />
+                @* <span asp-validation-for="FolderDto.Name" class="text-danger"></span> *@
+            </div>
+
+
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;"> Beschreibung</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="FolderDto.Description" class="form-control" value="@Model.FolderDto.Description" />
+                @* <span asp-validation-for="FolderDto.Name" class="text-danger"></span> *@
+            </div>
+
+
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;"> Jahr</label>
+            </div>
+            <div class="col-10 pb-3">
+                @if (@Model.FolderDto.Id == Guid.Empty)
+                {
+                    <input asp-for="FolderDto.Year" class="form-control" required value="@DateTime.Now.Year" />
+                }
+                else
+                {
+                    <input asp-for="FolderDto.Year" class="form-control" required value="@Model.FolderDto.Year" />
+                }
+                @* <span asp-validation-for="FolderDto.Year" class="text-danger"></span> *@
+            </div>
+
+
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;"> Monat</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="FolderDto.Month" class="form-control" />
+            </div>
+
+
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;"> Quartal</label>
+            </div>
+            <div class="col-10 pb-3">
+                @if (@Model.FolderDto.Id == Guid.Empty)
+                {
+                    <input asp-for="FolderDto.Quarter" class="form-control" value="@(DateTime.Now.Month - 1) / 3 + 1" />
+                }
+                else
+                {
+                    <input asp-for="FolderDto.Quarter" class="form-control" value="@Model.FolderDto.Quarter" />
+                }
+            </div>
+
+
+            @*<div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;"> Bild</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input type="file" class="form-control" id="ImageFile" asp-for="ImageFile" name="ImageFile" accept="image/*" />
+            </div>*@
+
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;"> </label>
+            </div>
+            <div class="col-10 pb-3">
+                <form id="colorOrgForm" asp-action="AddUpdate">
+                    <input type="hidden"
+                           asp-for="FolderDto.Color"
+                           name="selectedColor"
+                           value="@Model.FolderDto.Color" />
+
+                    <input type="hidden"
+                           asp-for="FolderDto.OrganisationId"
+                           name="selectedOrganizationId" />
+
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle btn-block"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                id="dropdownColor"
+                                style="width: 200px;">
+                            @(string.IsNullOrEmpty(Model.FolderDto.Color) ? "Farbe" : Model.FolderDto.Color)
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownColor">
+                            <button name="WHITE" class="dropdown-item" type="button" onclick="showColor(this)">WHITE</button>
+                            <button name="BLACK" class="dropdown-item" type="button" onclick="showColor(this)">BLACK</button>
+                            <button name="RED" class="dropdown-item" type="button" onclick="showColor(this)">RED</button>
+                            <button name="YELLOW" class="dropdown-item" type="button" onclick="showColor(this)">YELLOW</button>
+                            <button name="GREEN" class="dropdown-item" type="button" onclick="showColor(this)">GREEN</button>
+                            <button name="BLUE" class="dropdown-item" type="button" onclick="showColor(this)">BLUE</button>
+                            <button name="GRAY" class="dropdown-item" type="button" onclick="showColor(this)">GRAY</button>
+                        </ul>
+                    </div>
+
+                    @* <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle btn-block"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                id="dropdownOrg"
+                                style="width: 200px;">
+                            @(Model.FolderDto.OrganisationId == Guid.Empty ? "Organisation" : Model.OrganisationDtos.Where(x => x.Id == Model.FolderDto.OrganisationId).First().Name)
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownOrg">
+                            @foreach (var item in Model.OrganisationDtos)
+                            {
+                                <button name="@item.Name" class="dropdown-item" type="button" onclick="getOrgId(this)" data-org-id="@item.Id">@item.Name</button>
+                            }
+                        </ul>
+                    </div> *@
+
+
+                    <br />
+
+                    <div class="form-group">
+                        @* <label for="organizationDropdown">Organisation auswählen:</label> *@
+                        <select class="form-control" name="organizationDropdown" id="organizationDropdown">
+                            <option value="@(Model.FolderDto.OrganisationId == Guid.Empty ? "Organisation" : Model.OrganisationDtos.Where(x => x.Id == Model.FolderDto.OrganisationId).First().Name)">@(Model.FolderDto.OrganisationId == Guid.Empty ? "Organisation" : Model.OrganisationDtos.Where(x => x.Id == Model.FolderDto.OrganisationId).First().Name)</option>
+                            @foreach (var item in Model.OrganisationDtos)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+
+                    <input type="hidden" name="selectedOrganizationId" id="selectedOrganizationId">
+                    @* <div id="selectedOrgName"></div> *@
+
+
+                </form>
+            </div>           
+
+
+            <div class="col-5 offset-2">
+                <a asp-action="Index" class="btn-primary btn form-control">Abbrechen</a>
+            </div>
+
+            <div class="col-5">
+                <input type="submit" value="Add / Update" class="btn btn-success form-control" />
+            </div>
+
+        </div>
+
+        <div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+<script>
+    function getOrgId() {
+    const dropdownOrg = document.getElementById("organizationDropdown");
+    const selectedOrgId = dropdownOrg.value;
+    const selectedOrgName = dropdownOrg.options[dropdownOrg.selectedIndex].text;
+
+    document.querySelector('input[name="selectedOrganizationId"]').value = selectedOrgId;
+    document.getElementById("selectedOrgName").innerHTML = selectedOrgName;
+}
+
+const organizationDropdown = document.getElementById("organizationDropdown");
+organizationDropdown.addEventListener("change", getOrgId);
+
+
+
+    // function getOrgId(item) {
+    //     const selectedOrgId = item.getAttribute("data-org-id");
+    //     const selectedOrgName = item.innerHTML;
+    //     document.querySelector('input[name="selectedOrganizationId"]').value = selectedOrgId;
+    //     document.getElementById("selectedOrgName").innerHTML = selectedOrgName;
+    //     dropdownOrg.textContent = selectedOrgName;
+    // }
+
+
+    // function showOrgName(item) {
+    //     const selectedOrgName = item.getAttribute("data-org-id");
+    //     const selectedNameText = item.innerHTML;
+    //     document.querySelector('input[name="selectedColor"]').value = selectedOrgName;
+    //     document.getElementById("dropdownOrg").innerHTML = selectedOrgText;
+    // }
+
+    function showColor(item) {
+        const selectedColorName = item.getAttribute("name");
+        const selectedColorText = item.innerHTML;
+        document.querySelector('input[name="selectedColor"]').value = selectedColorName;
+        document.getElementById("dropdownColor").innerHTML = selectedColorText;
+    }
+
+
+    document.getElementById("customFile").addEventListener("change", function (event) {
+        const fileInput = event.target;
+        if (fileInput.files && fileInput.files.length > 0) {
+            const selectedFile = fileInput.files[0];
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.querySelector('input[name="ImageBase64"]').value = e.target.result;
+            };
+            reader.readAsDataURL(selectedFile);
+        }
+    });
+</script>
+

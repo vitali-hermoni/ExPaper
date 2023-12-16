@@ -1,0 +1,106 @@
+﻿@using ExPaper.Web.ViewModels;
+@model DocumentDto;
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<form asp-action="AddUpdate" enctype="multipart/form-data">
+    <br />
+
+    <div class="container border p-3">
+        <h1 class="text-white text-left">Ordner</h1>
+
+        <hr />
+        <div class="row">
+            <input asp-for="@Model.Id" type="hidden" />
+            <input asp-for="@Model.TabId" type="hidden"/>
+
+
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;"> Name</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="Name" class="form-control" required value="@Model.Name" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;"> Datum</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="Date" class="form-control" required />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;"> Beschreibung</label>
+            </div>
+            <div class="col-10 pb-3">
+                <textarea asp-for="Description" class="form-control">@Model.Description</textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;"> Schlüsselwörter</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="Tags" class="form-control" value="@Model.Tags" />
+                <span asp-validation-for="Tags" class="text-danger"></span>
+            </div>
+
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;"> Datei</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input type="file" class="form-control" id="documentFile" asp-for="Path" name="file" />
+            </div>
+           
+
+
+            <div class="col-5 offset-2">
+                <a asp-action="Index" class="btn-primary btn form-control">Abbrechen</a>
+            </div>
+
+            <div class="col-5">
+                <input type="submit" value="Add / Update" class="btn btn-success form-control" />
+
+            </div>
+
+        </div>
+
+        <div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
+
+<script>
+    document.getElementById("documentFile").addEventListener("change", function (event) {
+        const fileInput = event.target;
+        if (fileInput.files && fileInput.files.length > 0) {
+            const selectedFile = fileInput.files[0];
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.querySelector('input[name="ImageBase64"]').value = e.target.result;
+            };
+            reader.readAsDataURL(selectedFile);
+        }
+    });
+
+
+    $('.datepicker').datepicker({
+        format: 'dd/mm/yyyy (D)',
+        autoclose: true,
+        keyboardNavigation: true,
+        endDate: dateFormat(date, "dd/mm/yyyy (ddd)"),
+        daysOfWeekDisabled: [0]
+    });
+</script>

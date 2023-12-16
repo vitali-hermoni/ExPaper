@@ -1,0 +1,59 @@
+﻿@using ExPaper.SharedModels.Lib.DTO;
+@using ExPaper.SharedModels.Lib.Utilitys;
+
+@model GlobalSettingsDto
+
+<form asp-controller="GlobalSettings" asp-action="AddUpdate" method="post">
+    <br />
+    <div class="container border p-3">
+        <h1 class="text-white text-left">Allgemeine Einstellungen</h1>
+
+        <hr />
+        <div class="row">
+            <input asp-for="Id" class="form-control" required value="@Model.Id" readonly hidden />
+
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;"> Name</label>
+            </div>            
+            <div class="col-10 pb-3">
+                @if (User.IsInRole(nameof(SD.Role.ADMIN)))
+                {
+                    <input asp-for="Name" class="form-control" required value="@Model.Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                }
+                else
+                {
+                    <input asp-for="Name" class="form-control" required readonly value="@Model.Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                }
+            </div>
+            
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;">Wert</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="Value" class="form-control" required value="@Model.Value"/>
+                <span asp-validation-for="Value" class="text-danger"></span>
+            </div>
+
+            <div class="col-5 offset-2">
+                <a asp-controller="GlobalSettings" asp-action="Index" class="btn-primary btn form-control ">Abbrechen</a>
+            </div>
+
+            <div class="col-5">
+                @* <a asp-action="AddUpdate" asp-route-model="@Model" class="btn btn-success form-control">Anlegen / Updaten</a> *@
+                <input type="submit" value="Add / Update" class="btn btn-success form-control" />
+
+            </div>
+
+        </div>
+
+        <div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,169 @@
+﻿@using ExPaper.Web.ViewModels;
+@model DocumentsViewModel
+
+
+<form>
+    <div class="card shadow border-0 mt-4">
+        <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="text-white">Dokumente</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-4">
+            <div class="row pb-3">
+                <div class="col-6">
+                </div>
+                <div class="col-6 text-end">
+                    <a 
+                        asp-controller="Document" 
+                        asp-action="AddUpdateView" 
+                        asp-route-folderTabId="@Model.FolderTabId" 
+                        class="btn btn-outline-primary">
+                        <i class="bi bi-plus-square"></i> Neu
+                    </a>
+                </div>
+            </div>
+
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark box-shadow mb-3">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                       @*  <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Organisation</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="FolderTab" asp-action="All">Alle</a></li>
+                                @foreach (var item in Model.DocumentDtos)
+                                {
+                                    <li><a class="dropdown-item" asp-controller="FolderTab" asp-action="All">@item</a></li>
+                                }
+                                <li><hr class="dropdown-divider"></li>
+                            </ul>
+                        </li> *@
+                    </ul>
+
+                    <ul class="navbar-nav text-end">
+                        <form class="d-flex" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+                        </form>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="row">
+                @if(Model.DocumentDtos != null)
+                {
+                    foreach (var document in Model.DocumentDtos)
+                    {
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card" style="width: 20rem;">
+                                <table>
+                                    <tr>
+                                        <th height="50" width="50">
+                                            <img src="@Url.Content("../Images/document/PapgeDocument/W8VQH5JLDt_256x256x32.png")">
+                                            @* <iframe src='http://192.168.175.15/webdav/@document.Path'></iframe> *@
+                                        </th>
+                                    </tr>
+
+                                    <tr>
+                                        <th>
+                                            <div class="card-body">
+                                                <h5 class="card-title">@document.Name</h5>
+                                                <p class="card-text">@document.Date</p>
+                                                <p class="card-text">@document.Description</p>
+
+                                                <table>
+                                                    <tr>
+                                                        <th>
+                                                            <a class="btn btn-outline-danger"
+                                                               data-bs-toggle="modal"
+                                                               data-bs-target="#exampleModal"
+                                                               data-bs-whatever="@document.Id"
+                                                               onclick="setDeleteItemId('@document.Id')">
+                                                                <i class="bi bi-trash"></i>
+                                                            </a>
+                                                        </th>
+
+                                                        <th>
+                                                            @* <a class="btn btn-outline-warning form-control"
+                                                               asp-action="AddUpdateView"
+                                                               asp-route-folderTabId="">
+                                                                <i class="bi bi-pencil-square"></i>
+                                                            </a> *@
+                                                        </th>
+
+                                                        <th>
+                                                            <a class="btn btn-outline-success form-control"
+                                                               asp-controller="Document"
+                                                               asp-action="DocumentView"
+                                                               asp-route-documentId="@document.Id">
+                                                                <i class="bi bi-eye"></i>
+                                                            </a>
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+        </div>
+    </div>
+
+
+
+    @* Modal *@
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Löschen</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cancle"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <h6>Möchten Sie das Dokument unwiderruflich löschen?</h6>
+                            <input name="" type="text" class="form-control" id="delete-item-id" readonly hidden>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NEIN</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteItem()" data-bs-dismiss="modal">JA</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function setDeleteItemId(itemId) {
+            document.querySelector('#delete-item-id').value = itemId;
+        }
+
+        function deleteItem() {
+            fetch(`/Document/DeleteById/${document.querySelector('#delete-item-id').value} `, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    location.reload();
+                })
+                .catch(error => {
+                    location.reload();
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</form>

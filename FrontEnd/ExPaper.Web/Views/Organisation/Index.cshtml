@@ -1,0 +1,114 @@
+﻿@using ExPaper.SharedModels.Lib.DTO;
+@model IEnumerable<OrganisationDto>
+
+
+
+<form>
+	<div class="card shadow border-0 mt-4">
+		<div class="card-header bg-secondary bg-gradient ml-0 py-3">
+			<div class="row">
+				<div class="col-12 text-center">
+					<h1 class="text-white">Organisation</h1>
+				</div>
+			</div>
+		</div>
+		<div class="card-body p-4">
+			<div class="row pb-3">
+				<div class="col-6">
+				</div>
+				<div class="col-6 text-end">
+					<a asp-action="AddUpdateView" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Neu</a>
+				</div>
+			</div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>
+							Name
+						</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model)
+					{
+						<tr>
+							<td>
+								@item.Name
+							</td>
+							<td>
+								<input asp-for="@item.UserIds" type="hidden" />
+
+								<a 
+									asp-action="GetUserListForOrganisation" 
+									asp-route-userIds="@item.UserIds" 
+									asp-route-Id="@item.Id" 
+									asp-route-orgName="@item.Name"
+									class="btn btn-outline-secondary">Users</a>
+
+								<a asp-action="AddUpdateView" asp-route-id="@item.Id" class="btn btn-success">
+									<i class="bi bi-pencil-square"></i>
+								</a>
+
+								<button type="button"
+										class="btn btn-danger"
+										data-bs-toggle="modal"
+										data-bs-target="#exampleModal"
+										data-bs-whatever="@item.Id"
+										onclick="setDeleteItemId('@item.Id')">
+										<i class="bi bi-trash"></i>
+								</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">Delete</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cancle"></button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="mb-3">
+							<h6>Are you sure?</h6>
+							<input name="" type="text" class="form-control" id="delete-item-id" readonly hidden>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+					<button type="button" class="btn btn-danger" onclick="deleteItem()" data-bs-dismiss="modal">Löschen</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script>
+		function setDeleteItemId(itemId) {
+			document.querySelector('#delete-item-id').value = itemId;
+		}
+
+		function deleteItem() {
+			fetch(`/Organisation/DeleteById/${document.querySelector('#delete-item-id').value} `, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+				.then(response => response.json())
+				.then(data => {
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+		}
+	</script>
+
+</form>

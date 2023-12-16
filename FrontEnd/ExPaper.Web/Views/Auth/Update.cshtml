@@ -1,0 +1,64 @@
+﻿@using ExPaper.Web.ViewModels;
+@model UserDto;
+
+
+<form asp-action="Update">
+    <br />
+    <div class="container border p-3">
+        <h1 class="text-white text-left">Benutzer</h1>
+
+        <hr />
+        <div class="row">
+            <input asp-for="@Model.Id" type="hidden" />
+            <input asp-for="@Model.IdentKey" type="hidden" />
+
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;"> Name:</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="@Model.Name" class="form-control" required value="@Model.Name" />
+                <span asp-validation-for="Name" class="text-danger" />
+            </div>
+
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;"> Mail:</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="@Model.Email" class="form-control" required value="@Model.Email" />
+                <span asp-validation-for="Email" class="text-danger" />
+            </div>
+
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;"> Telefon:</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="@Model.PhoneNumber" class="form-control" required value="@Model.PhoneNumber" />
+                <span asp-validation-for="PhoneNumber" class="text-danger" />
+            </div>
+
+
+            <div class="col-5 offset-2">
+                <a asp-action="Index" class="btn-primary btn form-control">Abbrechen</a>
+            </div>
+
+            <div class="col-5">
+                <input type="submit" value="Add / Update" class="btn btn-success form-control" />
+            </div>
+
+        </div>
+
+        <div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+<script>
+
+</script>
+

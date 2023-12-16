@@ -1,0 +1,160 @@
+﻿@using ExPaper.Web.ViewModels;
+@model FolderTabsViewModel;
+
+
+<form>
+    <div class="card shadow border-0 mt-4">
+        <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="text-white">Register</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-4">
+            <div class="row pb-3">
+                <div class="col-6">
+                </div>
+                <div class="col-6 text-end">
+                    <a 
+                        asp-controller="FolderTab"
+                        asp-action="AddUpdateView"
+                        asp-route-folderId="@Model.FolderId"
+                        class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Neu</a>
+                </div>
+            </div>
+
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark box-shadow mb-3">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Farbe</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="FolderTab" asp-action="All">All</a></li>
+                                    <button name="WHITE" class="dropdown-item" type="button" onclick="showColor(this)">WHITE</button>
+                                    <button name="BLACK" class="dropdown-item" type="button" onclick="showColor(this)">BLACK</button>
+                                    <button name="RED" class="dropdown-item" type="button" onclick="showColor(this)">RED</button>
+                                    <button name="GREEN" class="dropdown-item" type="button" onclick="showColor(this)">GREEN</button>
+                                    <button name="BLUE" class="dropdown-item" type="button" onclick="showColor(this)">BLUE</button>
+                                    <button name="GRAY" class="dropdown-item" type="button" onclick="showColor(this)">GRAY</button>
+                                <li><hr class="dropdown-divider"></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav text-end">
+                        <form class="d-flex" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+                        </form>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="row">
+                <div class="card col-12 h-25">
+                    @foreach (var folderTab in Model.FolderTabDtos)
+                    {
+                        <br />
+                        <div class="card" style="border: 1px solid #A4A4A4; background-color: #2E2E2E;">                            
+                            <table height="50">
+                                <tr>
+                                    <th width="10" style="background-color: @folderTab.Color;"></th>
+                                    <th width="100">
+                                        @*<img src="@folderTab.Image" class="card-img-top">*@
+                                    </th>
+                                    <th>
+                                        <h5 class="card-title text-white-50 text-center py-2">@folderTab.Name</h5>
+                                    </th>
+                                    <th width="50">
+                                        <table>
+                                            <tr>
+                                                <th>
+                                                    <button type="button"
+                                                            class="btn btn-outline-danger"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#exampleModal"
+                                                            data-bs-whatever="@folderTab.Id"
+                                                            onclick="setDeleteItemId('@folderTab.Id')">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </th>
+
+                                                <th>
+                                                    <a class="btn btn-outline-warning form-control"
+                                                       asp-action="AddUpdateView"
+                                                       asp-route-folderTabId="@folderTab.Id">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </a>
+                                                </th>
+
+                                                <th>
+                                                    <a class="btn btn-outline-success form-control"
+                                                       asp-controller="Document"
+                                                       asp-action="Index"
+                                                       asp-route-folderTabId="@folderTab.Id">
+                                                        <i class="bi bi-box-arrow-in-right"></i>
+                                                    </a>
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </th>
+                                </tr>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Löschen</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cancle"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <h6>Bitte prüfen Sie, ob sich noch Dokumente im Tab befinden.</h6>
+                            <h6>Sollte dies der Fall sein, wird dieser Tab nicht gelöscht.</h6>
+                            <h6>Möchten Sie fortfahren?</h6>
+                            <input name="" type="text" class="form-control" id="delete-item-id" readonly hidden>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NEIN</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteItem()" data-bs-dismiss="modal">JA</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function setDeleteItemId(itemId) {
+            document.querySelector('#delete-item-id').value = itemId;
+        }
+
+        function deleteItem() {
+            fetch(`/FolderTab/DeleteById/${document.querySelector('#delete-item-id').value} `, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    location.reload();
+                })
+                .catch(error => {
+                    location.reload();
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</form>

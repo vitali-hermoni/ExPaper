@@ -1,0 +1,73 @@
+﻿@using ExPaper.Web.ViewModels;
+@model OrgUserListViewModel
+
+
+<div class="card shadow border-0 mt-4">
+	<div class="card-header bg-secondary bg-gradient ml-0 py-3">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h1 class="text-white">Benutzer in: @Model.OrgName</h1>
+			</div>
+		</div>
+	</div>
+	<div class="card-body p-4">
+		<div class="row pb-3">
+			<div class="col-6">
+				
+			</div>
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>
+						Name
+					</th>
+					<th>
+						Email
+					</th>
+					<th>
+						+ / -
+					</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model.UserInDb)
+				{
+					<tr>
+						<td>
+							@item.Name
+						</td>
+						<td>
+							@item.Email
+						</td>
+						<td>
+							@if (Model.UserInOrg.Any(userEmail => userEmail.Email == item.Email))
+							{
+								<a asp-action="DeleteUser" 
+								asp-route-userId="@item.Id" 
+								asp-route-orgId="@Model.OrgId" 
+								asp-route-orgName="@Model.OrgName"
+								asp-route-userIds="@Model.UserIds"
+								class="btn btn-danger">
+									<i class="bi bi-person-dash"></i>
+								</a>
+							}
+							else
+							{
+								<a asp-action="AddUser" 
+								asp-route-userId="@item.Id" 
+								asp-route-orgId="@Model.OrgId" 
+								asp-route-orgName="@Model.OrgName"
+								asp-route-userIds="@Model.UserIds"
+								class="btn btn-success">
+									<i class="bi bi-person-plus"></i>
+								</a>
+							}
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
