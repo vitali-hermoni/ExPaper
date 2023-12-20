@@ -44,10 +44,4 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Protobuf Include="..\..\Protos\document.proto" GrpcServices="Both">
-      <Link>Protos\document.proto</Link>
-    </Protobuf>
-  </ItemGroup>
-
 </Project>

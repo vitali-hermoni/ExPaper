@@ -35,11 +35,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExPaper.Organisation.API", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExPaper.User.API", "Services\ExPaper.User.API\ExPaper.User.API.csproj", "{7A6564B6-1132-437D-AB6E-27F0C62FA51C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protos", "Protos", "{DBA6913B-676E-4EBB-BA5B-4089816A5D4C}"
-	ProjectSection(SolutionItems) = preProject
-		Protos\document.proto = Protos\document.proto
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExPaper.Mailer.Lib", "Shared\ExPaper.Mailer.Lib\ExPaper.Mailer.Lib.csproj", "{32C9BA60-6723-40A5-B564-F20CE0A0FC86}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExPaper.Blazor.WASM", "FrontEnd\ExPaper.Blazor.WASM\ExPaper.Blazor.WASM.csproj", "{F2198BEB-6A72-40E3-A1E4-0F2FF8C1C660}"
