@@ -21,6 +21,7 @@ builder.Services.AddOcelot(builder.Configuration);
 
 var app = builder.Build();
 
+
 //app.MapReverseProxy();
 app.UseOcelot().GetAwaiter().GetResult();
 app.Run();

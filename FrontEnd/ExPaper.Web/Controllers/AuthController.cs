@@ -105,7 +105,9 @@ namespace ExPaper.Web.Controllers
                     {
                         registerRequestDto = registerRequestDto.WithRole(nameof(SD.Role.USER));
                     }
+
                     assingRole = await _authService.AssignRoleAsync(registerRequestDto);
+                    
                     if (assingRole != null && assingRole.IsSuccess)
                     {
                         TempData[SD.TempDataOk] = "Registration Successful";

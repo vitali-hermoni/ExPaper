@@ -9,7 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddSeriLog();
 
-// Add services to the container.
+
+//builder.Services.AddHttpsRedirection(options =>
+//{
+//    options.HttpsPort = 443;
+//});
+
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();

@@ -37,7 +37,8 @@ public class AuthService : IAuthService
             ApiType: SD.ApiType.POST,
             Url: $"{Urls.AuthApiBase}/{Urls.Auth_Register}",
             Data: registerRequestDto,
-            AccessToken: null));
+            AccessToken: null),
+            withBearer: false);
 
         return responseDto;
     }

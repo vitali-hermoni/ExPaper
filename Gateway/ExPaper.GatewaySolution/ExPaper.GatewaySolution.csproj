@@ -19,4 +19,8 @@
     <ProjectReference Include="..\..\Shared\ExPaper.SharedMethods.Lib\ExPaper.SharedMethods.Lib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
+
 </Project>
