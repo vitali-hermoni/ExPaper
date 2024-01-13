@@ -98,7 +98,7 @@ namespace ExPaper.Auth.API.Controllers
 
 
         [HttpPost("AssignRole")]
-        [Authorize(Roles = nameof(SD.Role.ADMIN) + "," + nameof(SD.Role.MANAGER))]
+        //[Authorize(Roles = nameof(SD.Role.ADMIN) + "," + nameof(SD.Role.MANAGER))]
         public async Task<IActionResult> AssignRole([FromBody] RegisterRequestDto registerRequestDto)
         {
             var assignRoleSucces = await _authService.AssignRoleAsync(registerRequestDto.Email, registerRequestDto.Role.ToUpper());
