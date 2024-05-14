@@ -2,7 +2,6 @@
 using ExPaper.Global.API.Data;
 using ExPaper.Global.API.Models;
 using ExPaper.Global.API.Services.IServices;
-using ExPaper.SharedMethods.Lib.Converter;
 using ExPaper.SharedModels.Lib.DTO;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -26,7 +25,7 @@ public class GlobalSettingsService : IGlobalSettingsService
 
 
 
-    public async Task<ResponseDto> GetAsync(Expression<Func<GlobalSettingModel, bool>>? expression = null)
+    public async Task<ResponseDto> GetAsync(Expression<Func<GlobalSettingModel, bool>> expression = null)
     {
         try
         {

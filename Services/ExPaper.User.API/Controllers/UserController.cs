@@ -56,7 +56,7 @@ namespace ExPaper.User.API.Controllers
         }
 
 
-        [HttpGet("getUsers")]
+        [HttpGet("GetUsers")]
 		[Authorize(Roles = nameof(SD.Role.ADMIN) + "," + nameof(SD.Role.MANAGER))]
 		public async Task<IActionResult> GetUserListByIdentKey()
 		{
@@ -72,7 +72,7 @@ namespace ExPaper.User.API.Controllers
 
 
 
-		[HttpGet("getUsersByIds")]
+		[HttpGet("GetUsersByIds")]
 		[Authorize(Roles = nameof(SD.Role.MANAGER))]
 		public async Task<IActionResult> GetUserListForOrganisation([FromBody] string userIds)
 		{

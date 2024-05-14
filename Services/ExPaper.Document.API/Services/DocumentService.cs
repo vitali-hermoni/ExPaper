@@ -5,11 +5,7 @@ using ExPaper.Document.API.Services.IServices;
 using ExPaper.SharedModels.Lib.DTO;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using System.Linq;
 using System.Linq.Expressions;
-using Grpc.AspNetCore;
-using System.Reflection.Metadata;
-using Grpc.Core;
 
 namespace ExPaper.Document.API.Services;
 

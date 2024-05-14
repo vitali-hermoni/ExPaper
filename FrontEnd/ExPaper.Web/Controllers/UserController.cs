@@ -54,9 +54,5 @@ namespace ExPaper.Web.Controllers
 				return RedirectToAction(nameof(Index), "Home");
 			}
         }
-
-
-
-        
     }
 }

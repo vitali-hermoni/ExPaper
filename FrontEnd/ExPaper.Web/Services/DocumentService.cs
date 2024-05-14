@@ -52,13 +52,16 @@ public class DocumentService : IDocumentService
     }
 
 
-    public async Task<ResponseDto> AddUpdateAsync(DocumentDto documentDto)
+    public async Task<ResponseDto> AddUpdateAsync(DocumentDto documentDto, IFormFile formFile = null)
     {
         var responseDto = await _baseService.SendAsync(new RequestDto(
             ApiType: SD.ApiType.PUT,
             Url: $"{Urls.DocumentApiBase}/{Urls.Document_AddUpdate}",
+            //Url: $"http://localhost:7006/{Urls.Document_AddUpdate}",
+            ContentType: SD.ContentType.MultipartFormData,
             Data: documentDto,
-            AccessToken: null));
+            AccessToken: null),
+            formFile: formFile);
 
         return responseDto;
     }

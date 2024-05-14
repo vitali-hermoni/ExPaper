@@ -131,6 +131,45 @@ namespace ExPaper.Web.Controllers
 
 
 
+
+
+    //    public async Task<IActionResult> UserList(Guid id)
+    //    {
+    //        try
+    //        {
+    //            if (id == Guid.Empty)
+    //            {
+    //                return View(nameof(UserList), new OrgUserListViewModel 
+				//	{ 
+				//		OrgId = Guid.Empty,
+				//		OrgName = string.Empty,
+				//		UserIds = string.Empty,
+				//		UserInOrg = null,
+				//		UserInDb = null,
+				//	});
+    //            }
+
+				//var usersResponseDto = await _organisationService.GetUsersAsync();
+				//var usersDto = JsonConvert.DeserializeObject<List<UserDto>>(Convert.ToString(usersResponseDto.Result)).First();
+
+    //            //var responseDto = await _organisationService.GetUserListForOrganisationAsync(id);
+    //            //var organisationDto = JsonConvert.DeserializeObject<List<OrganisationDto>>(Convert.ToString(responseDto.Result)).First();
+
+    //            return View(nameof(UserList), usersDto);
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            _logger.LogError(ex, ex.Message);
+    //            TempData[SD.TempDataError] = "Exception";
+    //            return RedirectToAction(nameof(Index), "Home");
+    //        }
+    //    }
+        
+		
+
+
+
+		
 		public async Task<IActionResult> AddUser(Guid userId, Guid orgId, string orgName, string userIds)
         {
 			try

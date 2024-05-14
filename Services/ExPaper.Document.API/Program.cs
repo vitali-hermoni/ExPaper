@@ -32,11 +32,11 @@ builder.Services.AddGrpc();
 //builder.Services.AddGrpcClient();
 
 
-// Add services to the container.
+
 builder.Services.AddScoped<IDocumentService, DocumentService>();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 
 
@@ -70,19 +70,23 @@ builder.AddAppAuthetication();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseSwagger();
+app.UseSwaggerUI();
+
+
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-app.MapGrpcService<DocumentService>();
+//app.MapGrpcService<DocumentService>();
 
 ApplyMigration();
 app.Run();

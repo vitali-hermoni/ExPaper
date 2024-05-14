@@ -46,14 +46,12 @@ public class FileService : IFileService
             _logger.LogError(ex, ex.Message);
             return false;
         }
-
-        return ret;
     }
 
 
 
 
-    public async Task<bool> DeleteFileFromNetworkShare(string filePath, string networkPath, string username, string password)
+    public bool DeleteFileFromNetworkShare(string filePath, string networkPath, string username, string password)
     {
         bool ret = false;
 

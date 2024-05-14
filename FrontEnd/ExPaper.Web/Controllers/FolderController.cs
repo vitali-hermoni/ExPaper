@@ -30,7 +30,7 @@ namespace ExPaper.Web.Controllers
 
 
 
-        public async Task<IActionResult> Index(string? orgName)
+        public async Task<IActionResult> Index(string orgName)
         {
             try
             {
@@ -99,7 +99,7 @@ namespace ExPaper.Web.Controllers
                         Color: null,
                         Year: 0,
                         Month: null,
-                        Quarter: null,
+                        Quarter: 0,
                         Image: null,
                         OrganisationId: Guid.Empty), OrganisationDtos: orgs, ImageFile: null);
 

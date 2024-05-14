@@ -7,8 +7,8 @@ namespace ExPaper.SharedModels.Lib.DTO;
 public record RequestDto(
     ApiType ApiType,
     string Url,
-    object? Data,
-    string? AccessToken,
+    object Data,
+    string AccessToken,
     ContentType? ContentType = ContentType.Json)
 {
 

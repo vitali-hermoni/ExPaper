@@ -27,9 +27,9 @@ public static class Urls
     // User -------------------------------------------------------------------------------------------
     public const string User_GetById = "api/User/GetById";
     public const string User_GetByMail = "api/User/GetByMail";
-    public const string User_GetUserList = "api/user/getUsers";
-    public const string User_DeleteUserById = "api/user/deleteUserById"; 
-    public const string User_GetUserListForOrganisateonAsync = "api/user/getUsersByIds";
+    public const string User_GetUserList = "api/User/GetUsers";
+    public const string User_DeleteUserById = "api/User/DeleteUserById"; 
+    public const string User_GetUserListForOrganisateonAsync = "api/User/GetUsersByIds";
 
 
 	// Global Settings -------------------------------------------------------------------------------

@@ -5,7 +5,7 @@ namespace ExPaper.SharedModels.Lib.DTO;
 public record LoginRequestDto
 {
     [Required(ErrorMessage = "Benutzername ist erforderlich")]
-    public string? UserName { get; init; }
+    public string UserName { get; init; }
 
 
     [Required(ErrorMessage = "Passwort ist erforderlich")]

@@ -70,7 +70,7 @@ namespace ExPaper.Auth.API.Controllers
 
 
         [HttpPost("Register")]
-        [Authorize(Roles = nameof(SD.Role.ADMIN))]
+        [Authorize(Roles = nameof(SD.Role.ADMIN) + "," + nameof(SD.Role.MANAGER))]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
         {
             var responseDto = await _authService.RegisterAsync(registerRequestDto);

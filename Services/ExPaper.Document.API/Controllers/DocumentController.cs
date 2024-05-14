@@ -3,7 +3,6 @@ using ExPaper.Document.API.Models;
 using ExPaper.Document.API.Services.IServices;
 using ExPaper.SharedModels.Lib.DTO;
 using ExPaper.SharedModels.Lib.Utilitys;
-using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
@@ -89,7 +88,7 @@ public class DocumentController : ControllerBase
 
     [HttpPut("AddUpdate")]
     [Authorize(Roles = nameof(SD.Role.ADMIN) + "," + nameof(SD.Role.MANAGER) + "," + nameof(SD.Role.SEPER_USER) + "," + nameof(SD.Role.USER))]
-    public async Task<IActionResult> AddUpdate([FromBody] DocumentDto documentDto)
+    public async Task<IActionResult> AddUpdate(DocumentDto documentDto)
     {
         var responseDto = await _documentService.AddUpdateAsync(_mapper.Map<DocumentModel>(documentDto));
         if (responseDto is null) return NotFound();

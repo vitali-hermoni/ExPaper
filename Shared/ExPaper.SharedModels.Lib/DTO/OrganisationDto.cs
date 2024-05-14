@@ -6,7 +6,7 @@ namespace ExPaper.SharedModels.Lib.DTO;
 public record OrganisationDto(
     Guid Id, 
     string Name, 
-    string? UserIds)
+    string UserIds)
 {
     public OrganisationDto WithUserIds(string userIds) => this with { UserIds = userIds };
 }

@@ -50,11 +50,11 @@ namespace ExPaper.Web.Controllers
         {
             try
             {
-                ResponseDto? responseDto = await _authService.LoginAsync(loginRequestDto);
+                ResponseDto responseDto = await _authService.LoginAsync(loginRequestDto);
 
                 if (responseDto is not null && responseDto.IsSuccess)
                 {
-                    LoginResponseDto? loginResponseDto = JsonConvert.DeserializeObject<LoginResponseDto?>(Convert.ToString(responseDto.Result));
+                    LoginResponseDto loginResponseDto = JsonConvert.DeserializeObject<LoginResponseDto>(Convert.ToString(responseDto.Result));
 
                     await SignInUser(loginResponseDto);
                     _tokenProvider.SetToken(loginResponseDto.Token);
@@ -96,8 +96,8 @@ namespace ExPaper.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                ResponseDto? result = await _authService.RegisterAsync(registerRequestDto);
-                ResponseDto? assingRole = new();
+                ResponseDto result = await _authService.RegisterAsync(registerRequestDto);
+                ResponseDto assingRole = new();
 
                 if (result != null && result.IsSuccess)
                 {
@@ -105,7 +105,9 @@ namespace ExPaper.Web.Controllers
                     {
                         registerRequestDto = registerRequestDto.WithRole(nameof(SD.Role.USER));
                     }
+
                     assingRole = await _authService.AssignRoleAsync(registerRequestDto);
+                    
                     if (assingRole != null && assingRole.IsSuccess)
                     {
                         TempData[SD.TempDataOk] = "Registration Successful";
@@ -140,7 +142,7 @@ namespace ExPaper.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordDto forgotPasswordDto)
         {
-            ResponseDto? responseDto = await _authService.ForgotPasswordAsync(forgotPasswordDto);
+            ResponseDto responseDto = await _authService.ForgotPasswordAsync(forgotPasswordDto);
             if (responseDto is not null) 
             {
                 var forgotPasswortCallbackDto = JsonConvert.DeserializeObject<ForgotPasswordCallbackDto>(Convert.ToString(responseDto.Result));
@@ -173,7 +175,7 @@ namespace ExPaper.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                ResponseDto? responseDto = await _authService.ResetPasswordAsync(resetPasswordRequestDto);
+                ResponseDto responseDto = await _authService.ResetPasswordAsync(resetPasswordRequestDto);
 
                 if (responseDto.IsSuccess)
                 {
@@ -197,13 +199,12 @@ namespace ExPaper.Web.Controllers
 
 
 
-        [HttpPost]
-        public async Task<IActionResult> UpdateView()
+        public async Task<IActionResult> UpdateView(string userMail)
         {
             try
             {
                 var claims = User.Identities.First().Claims.ToList();
-                var userId = claims?.FirstOrDefault(x => x.Type.Equals("Sub", StringComparison.OrdinalIgnoreCase))?.Value;
+                var userId = claims.FirstOrDefault(x => x.Type.Equals("Sub", StringComparison.OrdinalIgnoreCase)).Value;
 
                 if (userId is null)
                 {
@@ -213,7 +214,7 @@ namespace ExPaper.Web.Controllers
                 var userResponseDto = await _userService.GetByIdAsync(Guid.Parse(userId));
                 if (!userResponseDto.IsSuccess)
                 {
-                    _logger.LogError("", userResponseDto.Message);
+                    _logger.LogError(userResponseDto.Message);
                     TempData[SD.TempDataError] = "User - UpdateView - Error";
                     return RedirectToAction(nameof(UpdateView), "User");
                 }

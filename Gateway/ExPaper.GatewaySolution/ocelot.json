@@ -1,13 +1,13 @@
 {
   "Routes": [
 
-    //"Global API": "https://localhost:7001" ------------------------------------------------------------------------------
+    //"Global API": "https://192.168.175.28:7001" ------------------------------------------------------------------------------
     {
       "DownstreamPathTemplate": "/api/GlobalSettings/Get",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7001
         }
       ],
@@ -20,7 +20,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7001
         }
       ],
@@ -33,7 +33,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7001
         }
       ],
@@ -46,7 +46,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7001
         }
       ],
@@ -59,7 +59,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7001
         }
       ],
@@ -68,13 +68,13 @@
     },
 
 
-    //"Organisation API": "https://localhost:7002" ------------------------------------------------------------------------------
+    //"Organisation API": "https://192.168.175.28:7002" ------------------------------------------------------------------------------
     {
       "DownstreamPathTemplate": "/api/organisation/getall",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7002
         }
       ],
@@ -87,7 +87,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7002
         }
       ],
@@ -100,7 +100,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7002
         }
       ],
@@ -113,7 +113,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7002
         }
       ],
@@ -126,7 +126,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7002
         }
       ],
@@ -139,20 +139,20 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7002
         }
       ],
-      "UpstreamPathTemplate": "/api/Organisation/adduser/{userId}/{orgId}",
+      "UpstreamPathTemplate": "/api/organisation/adduser/{userId}/{orgId}",
       "UpstreamHttpMethod": [ "PUT" ]
     },
 
     {
-      "DownstreamPathTemplate": "/api/Organisation/deleteuser/{userId}/{orgId}",
+      "DownstreamPathTemplate": "/api/organisation/deleteuser/{userId}/{orgId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7002
         }
       ],
@@ -161,13 +161,13 @@
     },
 
 
-    //"Folder API": "https://localhost:7003" ------------------------------------------------------------------------------
+    //"Folder API": "https://192.168.175.28:7003" ------------------------------------------------------------------------------
     {
       "DownstreamPathTemplate": "/api/folder/getall",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7003
         }
       ],
@@ -180,7 +180,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7003
         }
       ],
@@ -193,7 +193,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7003
         }
       ],
@@ -206,7 +206,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7003
         }
       ],
@@ -219,7 +219,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7003
         }
       ],
@@ -232,7 +232,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7003
         }
       ],
@@ -242,81 +242,81 @@
 
 
 
-    //"User API": "https://localhost:7004" ------------------------------------------------------------------------------
+    //"User API": "https://192.168.175.28:7004" ------------------------------------------------------------------------------
     {
-      "DownstreamPathTemplate": "/api/user/getUsers",
+      "DownstreamPathTemplate": "/api/User/GetUsers",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7004
         }
       ],
-      "UpstreamPathTemplate": "/api/user/getUsers",
+      "UpstreamPathTemplate": "/api/User/GetUsers",
       "UpstreamHttpMethod": [ "GET" ]
     },
 
     {
-      "DownstreamPathTemplate": "/api/user/GetById/{id}",
+      "DownstreamPathTemplate": "/api/User/GetById/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7004
         }
       ],
-      "UpstreamPathTemplate": "/api/user/GetById/{id}",
+      "UpstreamPathTemplate": "/api/User/GetById/{id}",
       "UpstreamHttpMethod": [ "GET" ]
     },
 
     {
-      "DownstreamPathTemplate": "/api/user/GetByMail/{mail}",
+      "DownstreamPathTemplate": "/api/User/GetByMail/{mail}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7004
         }
       ],
-      "UpstreamPathTemplate": "/api/user/GetByMail/{mail}",
+      "UpstreamPathTemplate": "/api/User/GetByMail/{mail}",
       "UpstreamHttpMethod": [ "GET" ]
     },
 
     {
-      "DownstreamPathTemplate": "/api/user/getUsersByIds",
+      "DownstreamPathTemplate": "/api/User/GetUsersByIds",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7004
         }
       ],
-      "UpstreamPathTemplate": "/api/user/getUsersByIds",
+      "UpstreamPathTemplate": "/api/User/GetUsersByIds",
       "UpstreamHttpMethod": [ "GET" ]
     },
 
     {
-      "DownstreamPathTemplate": "/api/user/deleteUserById",
+      "DownstreamPathTemplate": "/api/User/DeleteUserById",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7004
         }
       ],
-      "UpstreamPathTemplate": "/api/user/deleteUserById",
+      "UpstreamPathTemplate": "/api/User/DeleteUserById",
       "UpstreamHttpMethod": [ "GET" ]
     },
 
 
 
-    //"FolderTap API": "https://localhost:7005" ------------------------------------------------------------------------------
+    //"FolderTap API": "https://192.168.175.28:7005" ------------------------------------------------------------------------------
     {
       "DownstreamPathTemplate": "/api/FolderTab/GetAll",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7005
         }
       ],
@@ -329,7 +329,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7005
         }
       ],
@@ -342,7 +342,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7005
         }
       ],
@@ -355,7 +355,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7005
         }
       ],
@@ -368,7 +368,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7005
         }
       ],
@@ -381,7 +381,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7005
         }
       ],
@@ -390,13 +390,13 @@
     },
 
 
-    //"Document API": "https://localhost:7005" ------------------------------------------------------------------------------
+    //"Document API": "https://192.168.175.28:7005" ------------------------------------------------------------------------------
     {
       "DownstreamPathTemplate": "/api/Document/GetAll",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7006
         }
       ],
@@ -409,7 +409,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7006
         }
       ],
@@ -422,7 +422,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7006
         }
       ],
@@ -435,7 +435,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7006
         }
       ],
@@ -448,7 +448,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7006
         }
       ],
@@ -461,7 +461,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "192.168.175.28",
           "Port": 7006
         }
       ],

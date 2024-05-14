@@ -5,16 +5,21 @@ using ExPaper.Auth.API.Services.IServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ExPaper.SharedMethods.Lib.Extensions;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using Microsoft.Extensions.Options;
+using System.Configuration;
 
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
 builder.Services.AddDbContext<AppDbContext>(option =>
 {
-    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), builder =>
+    {
+        //builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+    });
 });
 
 builder.AddSeriLog();
@@ -25,10 +30,10 @@ builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("ApiSett
 builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 builder.Services.Configure<IdentityOptions>(opt =>
 {
-    opt.Password.RequiredLength = 8;
-    opt.Password.RequireLowercase = true;
-    opt.Password.RequireUppercase = true;
-    opt.Password.RequireNonAlphanumeric = true;
+    opt.Password.RequiredLength = 6;
+    opt.Password.RequireLowercase = false;
+    opt.Password.RequireUppercase = false;
+    opt.Password.RequireNonAlphanumeric = false;
 
     opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(builder.Configuration.GetValue<int>("DefaultLockoutTimeSpan"));
     opt.Lockout.MaxFailedAccessAttempts = builder.Configuration.GetValue<int>("MaxFailedAccessAttempts");
@@ -49,18 +54,18 @@ builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

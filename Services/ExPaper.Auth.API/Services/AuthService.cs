@@ -1,14 +1,11 @@
 ﻿using ExPaper.Auth.API.Data;
 using ExPaper.Auth.API.Models;
 using ExPaper.Auth.API.Services.IServices;
-using ExPaper.SharedMethods.Lib.Converter;
 using ExPaper.SharedModels.Lib.DTO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-//using System.Security.Policy;
-using Microsoft.AspNetCore.Mvc;
-using System.Text.Json.Serialization;
+
 
 namespace ExPaper.Auth.API.Services;
 

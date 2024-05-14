@@ -2,12 +2,9 @@
 using ExPaper.SharedModels.Lib.Utilitys;
 using ExPaper.Web.Services.IServices;
 using ExPaper.Web.ViewModels;
-using MassTransit;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Net;
 
 namespace ExPaper.Web.Controllers
 {
@@ -68,10 +65,10 @@ namespace ExPaper.Web.Controllers
 
 
 
-        public async Task<IActionResult> WordEditor()
-        {
-            return View();
-        }
+        //public async Task<IActionResult> WordEditor()
+        //{
+        //    return View();
+        //}
 
 
 
@@ -104,7 +101,7 @@ namespace ExPaper.Web.Controllers
                     documentDto = documentDto.WithPath(docPath);
                     return Redirect(documentDto.Path);
 
-                    return View(nameof(DocumentView), documentDto);
+                    //return View(nameof(DocumentView), documentDto);
                 }
 
                 TempData[SD.TempDataError] = serverAddressResponseDto.Message;
@@ -150,12 +147,17 @@ namespace ExPaper.Web.Controllers
 
 
 
-        public async Task<IActionResult> AddUpdate(DocumentDto documentDto, IFormFile file)
+        public async Task<IActionResult> AddUpdate(DocumentDto documentDto, IFormFile file = null)
         {
             try
             {
                 if (file != null && file.Length > 0)
                 {
+                    if (documentDto.Name is null)
+                    {
+                        documentDto = documentDto.WithName(file.FileName);
+                    }
+
                     var folderTabResponseDto = await _folderTabService.GetByIdAsync(documentDto.TabId);
                     var folderTabDtos = JsonConvert.DeserializeObject<List<FolderTabDto>>(Convert.ToString(folderTabResponseDto.Result));
 
@@ -175,42 +177,49 @@ namespace ExPaper.Web.Controllers
 
                     string fileName = $"{Guid.NewGuid()}_{documentDto.Name}.pdf";
                     string filePath = Path.Combine(
-                        organisationDtos.First().Name, 
+                        organisationDtos.First().Name,
                         folderDtos.First().Name,
                         folderTabDtos.First().Name,
                         folderDtos.First().Year.ToString());
 
 
-                    var result = await _fileService.CopyFileToNetworkShare(
-                        file,
-                        fileName,
-                        filePath, 
-                        sharePathDto.First().Value, 
-                        userNameDto.First().Value, 
-                        passwordDto.First().Value);
+                    //var result = await _fileService.CopyFileToNetworkShare(
+                    //    file,
+                    //    fileName,
+                    //    filePath, 
+                    //    sharePathDto.First().Value, 
+                    //    userNameDto.First().Value, 
+                    //    passwordDto.First().Value);
 
-                    if (result)
+                    documentDto = documentDto.WithPath(Path.Combine(filePath, fileName));
+                    var responseDto = new ResponseDto();
+
+                    if (file is not null)
                     {
-                        documentDto = documentDto.WithPath(Path.Combine(filePath, fileName));
-                        var responseDto = await _documentService.AddUpdateAsync(documentDto);
+                        responseDto = await _documentService.AddUpdateAsync(documentDto, file);
+                    }
+                    else
+                    {
+                        responseDto = await _documentService.AddUpdateAsync(documentDto);
+                    }
 
-                        if (responseDto.IsSuccess)
-                        {
-                            TempData[SD.TempDataOk] = ConstStrings.AddUpdateSuccessful;
-                        }
-                        else
-                        {
-                            TempData[SD.TempDataError] = ConstStrings.AddUpdateNotSuccessful;
-                        }
 
-                        var documentsResponseDto = await _documentService.GetByFolderTabIdAsync(documentDto.TabId);
+                    if (responseDto.IsSuccess)
+                    {
+                        TempData[SD.TempDataOk] = ConstStrings.AddUpdateSuccessful;
+                    }
+                    else
+                    {
+                        TempData[SD.TempDataError] = ConstStrings.AddUpdateNotSuccessful;
+                    }
 
-                        if (documentsResponseDto.IsSuccess)
-                        {
-                            var documentDtos = JsonConvert.DeserializeObject<List<DocumentDto>>(Convert.ToString(documentsResponseDto.Result));
-                            DocumentsViewModel documentsViewModel = new(FolderTabId: documentDto.TabId, DocumentDtos: documentDtos);
-                            return View(nameof(Index), documentsViewModel);
-                        }
+                    var documentsResponseDto = await _documentService.GetByFolderTabIdAsync(documentDto.TabId);
+
+                    if (documentsResponseDto.IsSuccess)
+                    {
+                        var documentDtos = JsonConvert.DeserializeObject<List<DocumentDto>>(Convert.ToString(documentsResponseDto.Result));
+                        DocumentsViewModel documentsViewModel = new(FolderTabId: documentDto.TabId, DocumentDtos: documentDtos);
+                        return View(nameof(Index), documentsViewModel);
                     }
                 }
 
@@ -248,22 +257,24 @@ namespace ExPaper.Web.Controllers
                 var folderTabId = documentDto.First().TabId;
 
 
-                var result = await _fileService.DeleteFileFromNetworkShare(
+                var result = _fileService.DeleteFileFromNetworkShare(
                     documentDto.First().Path,
                     sharePathDto.First().Value,
                     userNameDto.First().Value,
                     passwordDto.First().Value);
 
+                var deleteResponseDto = await _documentService.RemoveByIdAsync(id);
+                if (deleteResponseDto.IsSuccess)
+                {
+                    var documentsResponseDto = await _documentService.GetByFolderTabIdAsync(folderTabId);
+                    var documentDtos = JsonConvert.DeserializeObject<List<DocumentDto>>(Convert.ToString(documentsResponseDto.Result));
+                    DocumentsViewModel documentsViewModel = new(FolderTabId: folderTabId, DocumentDtos: documentDtos);
+                    return View(nameof(Index), documentsViewModel);
+                }
+
                 if (result)
                 {
-                    var deleteResponseDto = await _documentService.RemoveByIdAsync(id);
-                    if (deleteResponseDto.IsSuccess)
-                    {
-                        var documentsResponseDto = _documentService.GetByFolderTabIdAsync(folderTabId);
-                        var documentDtos = JsonConvert.DeserializeObject<List<DocumentDto>>(Convert.ToString(documentsResponseDto.Result));
-                        DocumentsViewModel documentsViewModel = new(FolderTabId: folderTabId, DocumentDtos: documentDtos);
-                        return View(nameof(Index), documentsViewModel);
-                    }
+                    
                 }
 
                 return View(nameof(Index), new DocumentsViewModel(FolderTabId: folderTabId, DocumentDtos: null));

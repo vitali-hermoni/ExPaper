@@ -4,12 +4,12 @@
 public record FolderDto(
     Guid Id,
     string Name,
-    string? Description,
+    string Description,
     string Color,
     int Year,
-    string? Month,
-    int? Quarter,
-    string? Image,
+    string Month,
+    int Quarter,
+    string Image,
     Guid OrganisationId)
 {
     public FolderDto WithImage(string image) => this with { Image = image};

@@ -14,7 +14,6 @@ namespace ExPaper.FolderTab.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             base.OnModelCreating(modelBuilder);
         }
     }

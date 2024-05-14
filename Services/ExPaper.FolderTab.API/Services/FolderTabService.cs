@@ -28,7 +28,7 @@ public class FolderTabService : IFolderTabService
 
 
 
-    public async Task<ResponseDto> GetAsync(Expression<Func<FolderTabModel, bool>>? expression = null)
+    public async Task<ResponseDto> GetAsync(Expression<Func<FolderTabModel, bool>> expression = null)
     {
         try
         {

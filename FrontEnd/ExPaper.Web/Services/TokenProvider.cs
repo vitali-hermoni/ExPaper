@@ -19,10 +19,10 @@ namespace ExPaper.Web.Services
         }
 
 
-        public string? GetToken()
+        public string GetToken()
         {
-            string? token = null;
-            bool? hasToken = _contextAccessor.HttpContext?.Request.Cookies.TryGetValue(SD.TokenCookie, out token);
+            string token = null;
+            bool hasToken = _contextAccessor.HttpContext.Request.Cookies.TryGetValue(SD.TokenCookie, out token);
             return hasToken is true ? token : null;
         }
 

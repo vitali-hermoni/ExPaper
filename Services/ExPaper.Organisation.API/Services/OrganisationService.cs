@@ -30,7 +30,7 @@ public class OrganisationService : IOrganisationService
 
 
 
-    public async Task<ResponseDto> GetAsync(Expression<Func<OrganisationModel, bool>>? expression = null)
+    public async Task<ResponseDto> GetAsync(Expression<Func<OrganisationModel, bool>> expression = null)
     {
         try
         {

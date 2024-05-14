@@ -14,12 +14,13 @@ if (builder.Environment.EnvironmentName.ToString().ToLower().Equals("production"
 }
 else
 {
-    builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+    builder.Configuration.AddJsonFile("ocelot.Development.json", optional: false, reloadOnChange: true);
 }
 builder.Services.AddOcelot(builder.Configuration);
 
 
 var app = builder.Build();
+
 
 //app.MapReverseProxy();
 app.UseOcelot().GetAwaiter().GetResult();

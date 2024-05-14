@@ -7,7 +7,7 @@ public record FolderTabDto(
     Guid Id, 
     string Name,
     Guid FolderId,
-    string? Color = null)
+    string Color = null)
 {
     public FolderTabDto WithColor(string color) => this with { Color = color };
 }

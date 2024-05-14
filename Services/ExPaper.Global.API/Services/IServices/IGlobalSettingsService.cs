@@ -6,7 +6,7 @@ namespace ExPaper.Global.API.Services.IServices;
 
 public interface IGlobalSettingsService
 {
-    Task<ResponseDto> GetAsync(Expression<Func<GlobalSettingModel, bool>>? expression = null);
+    Task<ResponseDto> GetAsync(Expression<Func<GlobalSettingModel, bool>> expression = null);
 
     // TODO: GlobalSettingsDto to GlobalSettingsModel
     Task<ResponseDto> AddUpdateAsync(GlobalSettingsDto globalSettingModel);

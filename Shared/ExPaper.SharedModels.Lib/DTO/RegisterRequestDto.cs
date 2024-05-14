@@ -21,7 +21,7 @@ public record RegisterRequestDto
     [Compare("Password", ErrorMessage = "Die Passwörter stimmen nicht überein.")]
     public string ConfirmPassword { get; init; }
 
-    public string? Role { get; init; }
+    public string Role { get; init; }
 
     public RegisterRequestDto WithRole(string role) => this with { Role = role };
 }

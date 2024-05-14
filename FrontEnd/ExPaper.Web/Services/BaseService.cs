@@ -26,7 +26,7 @@ public class BaseService : IBaseService
 
 
 
-    public async Task<ResponseDto> SendAsync(RequestDto requestDto, bool withBearer = true)
+    public async Task<ResponseDto> SendAsync(RequestDto requestDto, bool withBearer = true, IFormFile formFile = null)
     {
         try
         {
@@ -51,25 +51,40 @@ public class BaseService : IBaseService
 
             if (requestDto.ContentType == ContentType.MultipartFormData)
             {
-                var content = new MultipartFormDataContent();
-
-                foreach (var prop in requestDto.Data.GetType().GetProperties())
+                if (formFile is not null)
                 {
-                    var value = prop.GetValue(requestDto.Data);
-                    if (value is FormFile)
-                    {
-                        var file = (FormFile)value;
-                        if (file != null)
-                        {
-                            content.Add(new StreamContent(file.OpenReadStream()), prop.Name, file.FileName);
-                        }
-                    }
-                    else
-                    {
-                        content.Add(new StringContent(value == null ? "" : value.ToString()), prop.Name);
-                    }
+                    var fileStream = formFile.OpenReadStream();
+                    var content = new StreamContent(fileStream);
+                    content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+                    message.Content = content;
+
+
+
+                    //var content = new MultipartFormDataContent();
+                    //content.Add(new StreamContent(formFile.OpenReadStream()), formFile.Name, formFile.FileName);
+                    //message.Content = content;
                 }
-                message.Content = content;
+
+
+
+                //foreach (var prop in requestDto.Data.GetType().GetProperties())
+                //{
+                //    var value = prop.GetValue(requestDto.Data);
+                //    if (value is FormFile)
+                //    {
+                //        var file = (FormFile)value;
+                //        if (file is not null)
+                //        {
+                //            content.Add(new StreamContent(file.OpenReadStream()), prop.Name, file.FileName);
+                //        }
+                //    }
+                //    else
+                //    {
+                //        content.Add(new StringContent(value == null ? "" : value.ToString()), prop.Name);
+                //    }
+                //}
+
+                
             }
             else
             {
